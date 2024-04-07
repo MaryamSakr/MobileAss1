@@ -1,15 +1,12 @@
-<<<<<<< Updated upstream
 import 'package:first_assiment/Login.dart';
 import 'package:first_assiment/SignUp.dart';
 import 'package:flutter/material.dart';
-=======
 import 'package:first_assiment/flutter/profile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'flutter/material.dart';
 import 'Login.dart';
->>>>>>> Stashed changes
 void main() {
   runApp(const MyApp());
 }
@@ -19,18 +16,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-<<<<<<< Updated upstream
-    return  MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        useMaterial3: true,
-      ),
-      routes: {
-        SignupScreen.id : (context) => SignupScreen(),
-        Login.id : (context) => Login(),
-      },
-      home: Login(),
-=======
     return MaterialApp(
         debugShowCheckedModeBanner:false,
         title: 'Flutter Demo',
@@ -59,7 +44,6 @@ class MyApp extends StatelessWidget {
       home:
       // SignUpScreen()
       TakePhotoForTheAccident()
->>>>>>> Stashed changes
     );
   }
 }
