@@ -3,8 +3,11 @@
 
 
 
+<<<<<<< Updated upstream
 // peter@klaven
 import 'package:first_assiment/SignUp.dart';
+=======
+>>>>>>> Stashed changes
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'dart:convert';
@@ -57,6 +60,7 @@ class _LoginState extends State<Login> {
                   passwordController.text.toString(),
                 );
               },
+<<<<<<< Updated upstream
               child: Container(
                 height: 50,
                 decoration: BoxDecoration(
@@ -81,6 +85,28 @@ class _LoginState extends State<Login> {
                   child: Text('Sign up',style: TextStyle(color: Colors.blue),)
                 ),
               ],
+=======
+              child: ElevatedButton(
+                onPressed: () {
+                  // Add your action for "Saved Posts" here
+                },
+                style: ElevatedButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                  backgroundColor: Colors.blue[700],
+                  // Increase the width and height of the button
+                  fixedSize: const Size(350, 60), // Adjust the size as needed
+                ), child: const Text(
+                'Login',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 18.0,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              ),
+>>>>>>> Stashed changes
             )
           ],
         ),
