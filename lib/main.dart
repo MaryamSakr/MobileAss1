@@ -1,12 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_rojects/files.dart';
-import 'package:flutter_rojects/first_screen.dart';
-import 'package:flutter_rojects/models/Files.dart';
-import 'package:provider/provider.dart';
-// import 'home.dart';
-import 'FilesDetaliedScreen.dart';
-import 'second_screen.dart';
-// import 'first_screen.dart';
+import 'Login.dart';
 void main() {
   runApp(const MyApp());
 }
@@ -14,25 +7,33 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
+  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return  MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (ctx)=>Files(),),
-      ],
-        child: MaterialApp(
-          theme: ThemeData(
-            useMaterial3: true,
-          ),
-          debugShowCheckedModeBanner: false,
-          home: const screen(),
-          routes: {
-            firstScreen.id:(context) => const firstScreen(),
-            secondScreen.id:(context) => const secondScreen(),
-            "FilesDetaliedScreen":(context) => const FilesDetaliedScreen(),
-          },
-        ),
+    return MaterialApp(
+      title: 'Flutter Demo',
+      theme: ThemeData(
+        // This is the theme of your application.
+        //
+        // TRY THIS: Try running your application with "flutter run". You'll see
+        // the application has a purple toolbar. Then, without quitting the app,
+        // try changing the seedColor in the colorScheme below to Colors.green
+        // and then invoke "hot reload" (save your changes or press the "hot
+        // reload" button in a Flutter-supported IDE, or press "r" if you used
+        // the command line to start the app).
+        //
+        // Notice that the counter didn't reset back to zero; the application
+        // state is not lost during the reload. To reset the state, use hot
+        // restart instead.
+        //
+        // This works for code too, not just values: Most code changes can be
+        // tested with just a hot reload.
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        useMaterial3: true,
+      ),
+      home:
+      // SignUpScreen()
+      Login()
     );
   }
 }
-
