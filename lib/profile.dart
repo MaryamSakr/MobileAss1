@@ -1,10 +1,11 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
-import 'package:first_assiment/Edit.dart';
 import 'package:flutter/material.dart';
 
 class Profile extends StatefulWidget {
+  var UserName;
+  Profile({Key? myKey , this.UserName}) : super(key: myKey);
   @override
   State<StatefulWidget> createState() {
     return FormScreenState();
@@ -55,8 +56,8 @@ class FormScreenState extends State<Profile> {
         debugShowCheckedModeBanner: false,
         home: Scaffold(
           appBar: AppBar(
-            title: const Text(
-              "Profile ",
+            title:  Text(
+              "${widget.UserName}",
               style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold , color: Colors.indigo),
             ),
             leading: IconButton(
@@ -239,34 +240,6 @@ class FormScreenState extends State<Profile> {
                 ),
                 const SizedBox(height: 20),
 
-                ElevatedButton(
-
-                  onPressed: (){
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => const EditScreen()),
-                    );
-
-                  },
-                  child: Container(
-                    height: 50,
-                    width: 100,
-                    child: const Row(
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.all(8.0),
-                        ),
-                        Text(
-                          'Edit Profile',
-                          style: TextStyle(
-                              fontSize: 15,
-                              color: Colors.indigo
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
 
 
               ],

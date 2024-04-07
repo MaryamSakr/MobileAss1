@@ -1,15 +1,9 @@
 // "email": "eve.holt@reqres.in",
 // "password": "cityslicka"
 
-
-
-// peter@klaven
 import 'package:first_assiment/SignUp.dart';
-
+import 'package:first_assiment/profile.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
-import 'dart:convert';
-
 import 'Logic.dart';
 
 class Login extends StatefulWidget {
@@ -27,32 +21,34 @@ class _LoginState extends State<Login> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Login',style: TextStyle(color: Colors.blue,
-            fontWeight: FontWeight.bold),),
+        title: const Text('Login',style: TextStyle(color: Colors.indigo,
+            fontWeight: FontWeight.bold , fontSize: 25),),
+        centerTitle: true,
       ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             TextFormField(
               controller: usernameController,
-              decoration: InputDecoration(
+              decoration:const InputDecoration(
                 hintText: 'Username',
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             TextFormField(
               controller: passwordController,
               obscureText: true,
-              decoration: InputDecoration(
+              decoration:const  InputDecoration(
                 hintText: 'Password',
               ),
             ),
             SizedBox(height: 40),
             GestureDetector(
               onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => Profile(UserName: usernameController.text,)));
                 login(
                   usernameController.text.toString(),
                   passwordController.text.toString(),
@@ -61,48 +57,29 @@ class _LoginState extends State<Login> {
               child: Container(
                 height: 50,
                 decoration: BoxDecoration(
-                  color: Colors.blue,
+                  color: Colors.indigo,
                   borderRadius: BorderRadius.circular(10),
                 ),
-                child: Center(
+                child:const Center(
                   child: Text('Login',style: TextStyle(color: Colors.white),),
                 ),
               ),
             ),
-            SizedBox(height: 30),
+            const SizedBox(height: 30),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text("Don't have an account?"),
-                SizedBox(width: 5,),
+                const Text("Don't have an account?"),
+                const SizedBox(width: 5,),
                 GestureDetector(
                   onTap: () {
                     Navigator.pushNamed(context, SignupScreen.id);
                   },
-                  child: Text('Sign up',style: TextStyle(color: Colors.blue),)
+                  child: const Text('Sign up',style: TextStyle(color: Colors.blue),)
                 ),
               ],
             ),
-              ElevatedButton(
-                onPressed: () {
-                  // Add your action for "Saved Posts" here
-                },
-                style: ElevatedButton.styleFrom(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
-                  backgroundColor: Colors.blue[700],
-                  // Increase the width and height of the button
-                  fixedSize: const Size(350, 60), // Adjust the size as needed
-                ), child: const Text(
-                'Login',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 18.0,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              ),
+
 
           ],
         ),
