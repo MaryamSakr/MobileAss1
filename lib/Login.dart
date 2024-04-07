@@ -4,6 +4,7 @@
 
 
 // peter@klaven
+import 'package:first_assiment/SignUp.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'dart:convert';
@@ -11,7 +12,7 @@ import 'dart:convert';
 import 'Logic.dart';
 
 class Login extends StatefulWidget {
-  const Login({Key? key}) : super(key: key);
+  static String id = 'Login';
 
   @override
   _LoginState createState() => _LoginState();
@@ -25,7 +26,8 @@ class _LoginState extends State<Login> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Login'),
+        title: const Text('Login',style: TextStyle(color: Colors.blue,
+            fontWeight: FontWeight.bold),),
       ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
@@ -58,13 +60,27 @@ class _LoginState extends State<Login> {
               child: Container(
                 height: 50,
                 decoration: BoxDecoration(
-                  color: Colors.green,
+                  color: Colors.blue,
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: Center(
-                  child: Text('Login'),
+                  child: Text('Login',style: TextStyle(color: Colors.white),),
                 ),
               ),
+            ),
+            SizedBox(height: 30),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text("Don't have an account?"),
+                SizedBox(width: 5,),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.pushNamed(context, SignupScreen.id);
+                  },
+                  child: Text('Sign up',style: TextStyle(color: Colors.blue),)
+                ),
+              ],
             )
           ],
         ),

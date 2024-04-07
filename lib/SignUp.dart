@@ -1,3 +1,4 @@
+import 'package:first_assiment/Login.dart';
 import 'package:flutter/material.dart';
 
 class SignupScreen extends StatefulWidget {
@@ -7,7 +8,7 @@ class SignupScreen extends StatefulWidget {
 }
 
 class _SignupScreenState extends State<SignupScreen> {
-  final _formKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _globalKey = GlobalKey<FormState>();
   String _name = '';
   String _gender = '';
   String _email = '';
@@ -16,24 +17,32 @@ class _SignupScreenState extends State<SignupScreen> {
   String _password = '';
   String _confirmPassword = '';
   RegExp get _emailRegex => RegExp(r'^\S+@stud.fci-cu.edu.eg');
+  List<String> _genders =["Male" ,"Female"];
+  List<String> _levels =['1','2','3','4'];
+
+  SignUp(){
+    pragma('ok');
+  }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
+        appBar: AppBar(
+          title: Text("Sign up",
+            style: TextStyle(color: Colors.blue,
+                fontWeight: FontWeight.bold),),
+        ),
         body: Form(
-          key: _formKey,
+          key: _globalKey,
           child: SingleChildScrollView(
             child: Container(
-              padding: EdgeInsets.only(top: 80),
+              padding: EdgeInsets.only(bottom: 20),
               child: Center(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text("Sign up",
-                    style: TextStyle(color: Colors.blue,fontSize: 40,fontWeight: FontWeight.bold),),
+                  children: <Widget>[
                     Container(
-                      margin: EdgeInsets.only(top: 40),
                       padding: EdgeInsets.symmetric(horizontal: 20),
                       child: TextFormField(
                         decoration: InputDecoration(
@@ -47,19 +56,35 @@ class _SignupScreenState extends State<SignupScreen> {
                           ),
                           prefixIcon: Icon(Icons.person),
                           hintText: 'user name',
-                          fillColor: Colors.green,
+                          fillColor: Colors.grey,
                         ),
                         validator: (value) {
-                          if (value == null) {
+                          if (value!.isEmpty) {
                             return 'Please enter your name';
                           }
                           return null;
                         },
                         onSaved: (value) {
-                          _name != value;
+                          _name = value!;
                         },
                       ),
                     ),
+                    for(int i=0;i < _genders.length; i++)
+                      Container(
+                        padding: EdgeInsets.symmetric(horizontal: 20),
+                        child: Row(
+                            children: [
+                              Radio(value: _genders[i].toString(),
+                                  groupValue: _gender,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      _gender = value.toString();
+                                    });
+                                  },),
+                              Text(_genders[i]),
+                            ],
+                          ),
+                      ),
                     Container(
                       margin: EdgeInsets.only(top: 10),
                       padding: EdgeInsets.symmetric(horizontal: 20),
@@ -75,18 +100,18 @@ class _SignupScreenState extends State<SignupScreen> {
                           ),
                           prefixIcon: Icon(Icons.mail),
                           hintText: 'studentID@stud.fci-cu.edu.eg',
-                          fillColor: Colors.green,
+                          fillColor: Colors.grey,
                         ),
                         validator: (value) {
-                          if (value == null) {
+                          if (value!.isEmpty) {
                             return 'Please enter your email';
                           }else if (!_emailRegex.hasMatch(value)){
-                            return 'Email address is not valid';
+                            return 'Email address is not valid\n It should be FCI Email structure';
                           }
                           return null;
                         },
                         onSaved: (value) {
-                          _email != value;
+                          _email = value!;
                         },
                       ),
                     ),
@@ -105,19 +130,36 @@ class _SignupScreenState extends State<SignupScreen> {
                           ),
                           prefixIcon: Icon(Icons.info),
                           hintText: 'student id',
-                          fillColor: Colors.green,
+                          fillColor: Colors.grey,
                         ),
                         validator: (value) {
-                          if (value == null) {
+                          if (value!.isEmpty) {
                             return 'Please enter your ID';
                           }
                           return null;
                         },
                         onSaved: (value) {
-                          _studentID != value;
+                          _studentID = value!;
                         },
                       ),
                     ),
+                    for(int i=0;i < _levels.length; i++)
+                      Container(
+                        padding: EdgeInsets.symmetric(horizontal: 20),
+                        child: Row(
+                          children: [
+                            Radio(value: _levels[i].toString(),
+                              groupValue: _level,
+                              onChanged: (value) {
+                                setState(() {
+                                  _level = value.toString();
+                                });
+                              },),
+                            Text("Level "),
+                            Text(_levels[i]),
+                          ],
+                        ),
+                      ),
                     Container(
                       margin: EdgeInsets.only(top: 10),
                       padding: EdgeInsets.symmetric(horizontal: 20),
@@ -134,16 +176,18 @@ class _SignupScreenState extends State<SignupScreen> {
                           ),
                           prefixIcon: Icon(Icons.lock),
                           hintText: 'password',
-                          fillColor: Colors.green,
+                          fillColor: Colors.grey,
                         ),
                         validator: (value) {
-                          if (value == null) {
+                          if (value!.isEmpty) {
                             return 'Please enter your password';
+                          }else if(value.length < 8){
+                            return 'Password should be at least 8 characters';
                           }
                           return null;
                         },
                         onSaved: (value) {
-                          _password != value;
+                          _password = value!;
                         },
                       ),
                     ),
@@ -163,30 +207,43 @@ class _SignupScreenState extends State<SignupScreen> {
                           ),
                           prefixIcon: Icon(Icons.lock),
                           hintText: 'confirm password',
-                          fillColor: Colors.green,
+                          fillColor: Colors.grey,
                         ),
                         validator: (value) {
-                          if (value == null) {
-                            return 'Please enter your password again';
+                          if (value!.isEmpty || !(value == _password)) {
+                            return 'Password not match';
                           }
                           return null;
                         },
                         onSaved: (value) {
-                          _confirmPassword != value;
+                          _confirmPassword = value!;
                         },
                       ),
                     ),
-                    ElevatedButton(onPressed: (){
-                      if(_formKey.currentState!.validate()){
-                        var snackBar= const SnackBar(content: Text('Success'));
-                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                        Navigator.of(context).push(MaterialPageRoute(builder: (context) => const MyHomePage()));
+                    SizedBox(height: 10),
+                    ElevatedButton(
+                      onPressed: (){
+                      if(_globalKey.currentState!.validate()){
+                        _globalKey.currentState!.validate();
+                      }else{
+                        SignUp();
+                        Navigator.pop(context,Login.id);
                       }
-                      else{
-                        var snackBar= const SnackBar(content: Text('failed'));
-                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                      }
-                    }, child: Text('Sign up'),
+                    }, child: Text('Sign up',style: TextStyle(color: Colors.blue),),
+                    ),
+                    SizedBox(height: 10),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text("Already have an account?"),
+                        SizedBox(width: 5,),
+                        GestureDetector(
+                            onTap: () {
+                              Navigator.pop(context, Login.id);
+                            },
+                            child: Text('Log in',style: TextStyle(color: Colors.blue),)
+                        ),
+                      ],
                     )
                   ],
                 ),

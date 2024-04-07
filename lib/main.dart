@@ -1,5 +1,6 @@
+import 'package:first_assiment/Login.dart';
+import 'package:first_assiment/SignUp.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_rojects/SignUp.dart';
 void main() {
   runApp(const MyApp());
 }
@@ -14,7 +15,11 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         useMaterial3: true,
       ),
-      home: SignupScreen(),
+      routes: {
+        SignupScreen.id : (context) => SignupScreen(),
+        Login.id : (context) => Login(),
+      },
+      home: Login(),
     );
   }
 }
