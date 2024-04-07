@@ -86,10 +86,10 @@ class _SignupScreenState extends State<SignupScreen> {
                           ),
                       ),
                     Container(
-                      margin: EdgeInsets.only(top: 10),
-                      padding: EdgeInsets.symmetric(horizontal: 20),
+                      margin: const EdgeInsets.only(top: 10),
+                      padding:const EdgeInsets.symmetric(horizontal: 20),
                       child: TextFormField(
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.all(Radius.circular(30)),
                             borderSide: BorderSide(color: Colors.black12),
@@ -116,10 +116,10 @@ class _SignupScreenState extends State<SignupScreen> {
                       ),
                     ),
                     Container(
-                      margin: EdgeInsets.only(top: 10),
-                      padding: EdgeInsets.symmetric(horizontal: 20),
+                      margin:const EdgeInsets.only(top: 10),
+                      padding:const EdgeInsets.symmetric(horizontal: 20),
                       child: TextFormField(
-                        decoration: InputDecoration(
+                        decoration:const InputDecoration(
                           enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.all(Radius.circular(30)),
                             borderSide: BorderSide(color: Colors.black12),
@@ -145,7 +145,7 @@ class _SignupScreenState extends State<SignupScreen> {
                     ),
                     for(int i=0;i < _levels.length; i++)
                       Container(
-                        padding: EdgeInsets.symmetric(horizontal: 20),
+                        padding:const EdgeInsets.symmetric(horizontal: 20),
                         child: Row(
                           children: [
                             Radio(value: _levels[i].toString(),
@@ -155,17 +155,17 @@ class _SignupScreenState extends State<SignupScreen> {
                                   _level = value.toString();
                                 });
                               },),
-                            Text("Level "),
+                            const Text("Level "),
                             Text(_levels[i]),
                           ],
                         ),
                       ),
                     Container(
-                      margin: EdgeInsets.only(top: 10),
-                      padding: EdgeInsets.symmetric(horizontal: 20),
+                      margin:const EdgeInsets.only(top: 10),
+                      padding:const EdgeInsets.symmetric(horizontal: 20),
                       child: TextFormField(
                         obscureText: true,
-                        decoration: InputDecoration(
+                        decoration:const InputDecoration(
                           enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.all(Radius.circular(30)),
                             borderSide: BorderSide(color: Colors.black12),
@@ -192,11 +192,11 @@ class _SignupScreenState extends State<SignupScreen> {
                       ),
                     ),
                     Container(
-                      margin: EdgeInsets.only(top: 10),
-                      padding: EdgeInsets.symmetric(horizontal: 20),
+                      margin:const EdgeInsets.only(top: 10),
+                      padding:const EdgeInsets.symmetric(horizontal: 20),
                       child: TextFormField(
                         obscureText: true,
-                        decoration: InputDecoration(
+                        decoration:const InputDecoration(
                           enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.all(Radius.circular(30)),
                             borderSide: BorderSide(color: Colors.black12),
@@ -220,7 +220,7 @@ class _SignupScreenState extends State<SignupScreen> {
                         },
                       ),
                     ),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                     ElevatedButton(
                       onPressed: (){
                       if(_globalKey.currentState!.validate()){
@@ -229,19 +229,19 @@ class _SignupScreenState extends State<SignupScreen> {
                         SignUp();
                         Navigator.pop(context,Login.id);
                       }
-                    }, child: Text('Sign up',style: TextStyle(color: Colors.blue),),
+                    }, child:const Text('Sign up',style: TextStyle(color: Colors.blue),),
                     ),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text("Already have an account?"),
+                        const Text("Already have an account?"),
                         SizedBox(width: 5,),
                         GestureDetector(
                             onTap: () {
                               Navigator.pop(context, Login.id);
                             },
-                            child: Text('Log in',style: TextStyle(color: Colors.blue),)
+                            child:const Text('Log in',style: TextStyle(color: Colors.blue),)
                         ),
                       ],
                     )

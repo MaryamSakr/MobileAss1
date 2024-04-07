@@ -1,7 +1,7 @@
 import 'package:first_assiment/Login.dart';
 import 'package:first_assiment/SignUp.dart';
 import 'package:flutter/material.dart';
-import 'package:first_assiment/flutter/profile.dart';
+import 'package:first_assiment/profile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -43,7 +43,7 @@ class MyApp extends StatelessWidget {
       ),
       home:
       // SignUpScreen()
-      TakePhotoForTheAccident()
+      Profile()
     );
   }
 }

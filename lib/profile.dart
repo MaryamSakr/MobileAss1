@@ -1,17 +1,17 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
-
+import 'package:first_assiment/Edit.dart';
 import 'package:flutter/material.dart';
 
-class TakePhotoForTheAccident extends StatefulWidget {
+class Profile extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
     return FormScreenState();
   }
 }
 
-class FormScreenState extends State<TakePhotoForTheAccident> {
+class FormScreenState extends State<Profile> {
   bool show = true;
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -63,7 +63,7 @@ class FormScreenState extends State<TakePhotoForTheAccident> {
               icon: const Icon(
                 Icons.arrow_back_ios,
                 size: 20,
-                color: Colors.white,
+                color: Colors.indigo,
               ),
               onPressed: () {
                 Navigator.pop(context);
@@ -83,7 +83,7 @@ class FormScreenState extends State<TakePhotoForTheAccident> {
                   child: CircleAvatar(
                     backgroundImage: FileImage(GalleryImage!)
                   ),
-                ) :const Icon(Icons.photo,size: 150,color: Colors.white60,),
+                ) :const Icon(Icons.photo,size: 150,color: Colors.blueGrey,),
                 const SizedBox(height: 30),
                 ElevatedButton(
                   onPressed: () => PickImage(ImageSource.camera),
@@ -131,12 +131,147 @@ class FormScreenState extends State<TakePhotoForTheAccident> {
                   ),
                 ),
 
+                const SizedBox(height: 20),
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 20),
+                  child: TextFormField(
+                    enabled: false,
+                    decoration: const InputDecoration(
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(30)),
+                        borderSide: BorderSide(color: Colors.black12),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(30)),
+                        borderSide: BorderSide(color: Colors.blue),
+                      ),
+                      prefixIcon: Icon(Icons.person),
+                      hintText: 'user name',
+                      fillColor: Colors.grey,
+                    ),
+                  ),
+                ),
 
 
+                const SizedBox(height: 20),
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 20),
+                  child: TextFormField(
+                    enabled: false,
+                    decoration: const InputDecoration(
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(30)),
+                        borderSide: BorderSide(color: Colors.black12),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(30)),
+                        borderSide: BorderSide(color: Colors.blue),
+                      ),
+                      prefixIcon: Icon(Icons.person),
+                      hintText: 'Id',
+                      fillColor: Colors.grey,
+                    ),
+                  ),
+                ),
+
+                const SizedBox(height: 20),
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 20),
+                  child: TextFormField(
+                    enabled: false,
+                    decoration: const InputDecoration(
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(30)),
+                        borderSide: BorderSide(color: Colors.black12),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(30)),
+                        borderSide: BorderSide(color: Colors.blue),
+                      ),
+                      prefixIcon: Icon(Icons.person),
+                      hintText: 'email',
+                      fillColor: Colors.grey,
+                    ),
+                  ),
+                ),
+
+
+                const SizedBox(height: 20),
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 20),
+                  child: TextFormField(
+                    enabled: false,
+                    decoration: const InputDecoration(
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(30)),
+                        borderSide: BorderSide(color: Colors.black12),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(30)),
+                        borderSide: BorderSide(color: Colors.blue),
+                      ),
+                      prefixIcon: Icon(Icons.person),
+                      hintText: 'Gender',
+                      fillColor: Colors.grey,
+                    ),
+                  ),
+                ),
+
+                const SizedBox(height: 20),
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 20),
+                  child: TextFormField(
+                    enabled: false,
+                    decoration: const InputDecoration(
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(30)),
+                        borderSide: BorderSide(color: Colors.black12),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(30)),
+                        borderSide: BorderSide(color: Colors.blue),
+                      ),
+                      prefixIcon: Icon(Icons.person),
+                      hintText: 'Level',
+                      fillColor: Colors.grey,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 20),
+
+                ElevatedButton(
+
+                  onPressed: (){
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const EditScreen()),
+                    );
+
+                  },
+                  child: Container(
+                    height: 50,
+                    width: 100,
+                    child: const Row(
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.all(8.0),
+                        ),
+                        Text(
+                          'Edit Profile',
+                          style: TextStyle(
+                              fontSize: 15,
+                              color: Colors.indigo
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
 
 
               ],
             ),
+
           ),
         ));
   }
