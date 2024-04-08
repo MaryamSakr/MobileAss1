@@ -6,6 +6,7 @@ import 'package:first_assiment/profile.dart';
 import 'package:flutter/material.dart';
 import 'DataBaseHandler/FileHelper.dart';
 import 'Logic.dart';
+import 'getFormTextField.dart';
 
 class Login extends StatefulWidget {
   static String id = 'Login';
@@ -37,20 +38,18 @@ class _LoginState extends State<Login> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            TextFormField(
-              controller: usernameController,
-              decoration:const InputDecoration(
-                hintText: 'Username',
-              ),
+            getTextFormField(
+                controller: usernameController,
+                icon: Icons.person,
+                hintName: 'User name'
             ),
             const SizedBox(height: 20),
-            TextFormField(
-              controller: passwordController,
-              obscureText: true,
-              decoration:const  InputDecoration(
-                hintText: 'Password',
-              ),
-            ),
+          getTextFormField(
+            controller: passwordController,
+            icon: Icons.lock,
+            hintName: 'password',
+            isObscureText: true,
+          ),
             SizedBox(height: 40),
             GestureDetector(
               onTap: () async {
@@ -60,7 +59,6 @@ class _LoginState extends State<Login> {
                 if(isLoggedIn){
                   Navigator.push(context, MaterialPageRoute(builder: (context) => Profile(UserName: usernameController.text,)));
                 }
-                // Navigator.push(context, MaterialPageRoute(builder: (context) => Profile(UserName: usernameController.text,)));
                 login(
                   usernameController.text.toString(),
                   passwordController.text.toString(),

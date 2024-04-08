@@ -49,14 +49,6 @@ class _SignupScreenState extends State<SignupScreen> {
         file.writeStudent(student).then((data){
           Navigator.pop(context);
         });
-
-        // await dbHelper.saveData(student).then((studentData) {
-        //   alertDialog(context, "Successfully Saved");
-        //   Navigator.pop(context);
-        // }).catchError((error) {
-        //   print(error);
-        //   alertDialog(context, "Error: Data Save Fail");
-        // });
       }
     }
   }
