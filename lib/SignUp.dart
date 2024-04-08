@@ -1,9 +1,9 @@
-import 'package:first_assiment/Login.dart';
 import 'package:first_assiment/alertDialog.dart';
 import 'package:first_assiment/moduls/student.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'DataBaseHandler/DBHelper.dart';
+import 'getFormTextField.dart';
 
 class SignupScreen extends StatefulWidget {
   static String id='SignUpScreen';
@@ -13,14 +13,13 @@ class SignupScreen extends StatefulWidget {
 
 class _SignupScreenState extends State<SignupScreen> {
   final GlobalKey<FormState> _globalKey = GlobalKey<FormState>();
-  String _name = '';
   String _gender = '';
-  String _email = '';
-  String _studentID = '';
   String _level = '';
-  String _password = '';
-  String _confirmPassword = '';
-  RegExp get _emailRegex => RegExp(r'^\S+@stud.fci-cu.edu.eg');
+  final _studentID = TextEditingController();
+  final _name = TextEditingController();
+  final _email = TextEditingController();
+  final _password = TextEditingController();
+  final _conPassword = TextEditingController();
   List<String> _genders =["Male" ,"Female"];
   List<String> _levels =['1','2','3','4'];
   var dbHelper ;
@@ -30,27 +29,30 @@ class _SignupScreenState extends State<SignupScreen> {
     dbHelper = DBHelper();
 }
 
-  Future<void> SignUp() async {
-    String name = _name;
+  SignUp() async {
+    String name = _name.text;
     String gender = _gender;
-    String email = _email;
-    String studentID = _studentID;
+    String email = _email.text;
+    String studentID = _studentID.text;
     String level = _level;
-    String password = _password;
-
-    _globalKey.currentState!.save();
-    Student student = Student(name, gender, email, studentID, level, password);
-    await dbHelper.saveData(student).then((userData) {
-      // showToast(context,'successfully sign up' );
-      SnackBar(
-        content: Text('successfully sign up'),
-        duration: Duration(seconds: 3), // Adjust the duration as needed
-      );
-      Navigator.pop(context);
-    }).catchError((error) {
-      print(error);
-      showToast(context,"Error: Data Save Fail");
-    });
+    String password = _password.text;
+    String conPassword = _conPassword.text;
+    if (_globalKey.currentState!.validate()) {
+      if (password != conPassword) {
+        alertDialog(context, 'Password Mismatch');
+      } else {
+        _globalKey.currentState!.save();
+        Student student = Student(name, gender, email, studentID, level, password);
+        await dbHelper.saveData(student).then((studentData) {
+          alertDialog(context, "Successfully Saved");
+          Navigator.pop(context);
+        }).catchError((error) {
+          print(error);
+          Text('sff');
+          alertDialog(context, "Error: Data Save Fail");
+        });
+      }
+    }
   }
 
   @override
@@ -71,90 +73,22 @@ class _SignupScreenState extends State<SignupScreen> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    Container(
-                      padding: EdgeInsets.symmetric(horizontal: 20),
-                      child: TextFormField(
-                        decoration: InputDecoration(
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(30)),
-                            borderSide: BorderSide(color: Colors.black12),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(30)),
-                            borderSide: BorderSide(color: Colors.blue),
-                          ),
-                          prefixIcon: Icon(Icons.person),
-                          hintText: 'user name',
-                          fillColor: Colors.grey,
-                        ),
-                        validator: (value) {
-                          if (value!.isEmpty) {
-                            return 'Please enter your name';
-                          }
-                          return null;
-                        },
-                        onSaved: (value) {
-                          _name = value!;
-                        },
+                     getTextFormField(
+                          controller: _name,
+                          icon: Icons.person,
+                          hintName: 'User name'
                       ),
+                    SizedBox(height: 10,),
+                    getTextFormField(
+                        controller: _email,
+                        icon: Icons.mail,
+                        hintName: 'studentID@stud.fci-cu.edu.eg'
                     ),
-                    Container(
-                      margin: const EdgeInsets.only(top: 10),
-                      padding:const EdgeInsets.symmetric(horizontal: 20),
-                      child: TextFormField(
-                        decoration: const InputDecoration(
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(30)),
-                            borderSide: BorderSide(color: Colors.black12),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(30)),
-                            borderSide: BorderSide(color: Colors.blue),
-                          ),
-                          prefixIcon: Icon(Icons.mail),
-                          hintText: 'studentID@stud.fci-cu.edu.eg',
-                          fillColor: Colors.grey,
-                        ),
-                        validator: (value) {
-                          if (value!.isEmpty) {
-                            return 'Please enter your email';
-                          }else if (!_emailRegex.hasMatch(value)){
-                            return 'Email address is not valid\n It should be FCI Email structure';
-                          }
-                          return null;
-                        },
-                        onSaved: (value) {
-                          _email = value!;
-                        },
-                      ),
-                    ),
-                    Container(
-                      margin:const EdgeInsets.only(top: 10),
-                      padding:const EdgeInsets.symmetric(horizontal: 20),
-                      child: TextFormField(
-                        decoration:const InputDecoration(
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(30)),
-                            borderSide: BorderSide(color: Colors.black12),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(30)),
-                            borderSide: BorderSide(color: Colors.blue),
-                          ),
-                          prefixIcon: Icon(Icons.info),
-                          hintText: 'student id',
-                          fillColor: Colors.grey,
-                        ),
-                        validator: (value) {
-                          if (value!.isEmpty) {
-                            return 'Please enter your ID';
-                          }
-                          return null;
-                        },
-                        onSaved: (value) {
-                          _studentID = value!;
-                        },
-                      ),
+                    SizedBox(height: 10,),
+                    getTextFormField(
+                        controller: _studentID,
+                        icon: Icons.info,
+                        hintName: 'student id',
                     ),
                     Container(
                       alignment: Alignment.topLeft,
@@ -201,75 +135,24 @@ class _SignupScreenState extends State<SignupScreen> {
                           ],
                         ),
                       ),
-                    Container(
-                      margin:const EdgeInsets.only(top: 10),
-                      padding:const EdgeInsets.symmetric(horizontal: 20),
-                      child: TextFormField(
-                        obscureText: true,
-                        decoration:const InputDecoration(
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(30)),
-                            borderSide: BorderSide(color: Colors.black12),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(30)),
-                            borderSide: BorderSide(color: Colors.blue),
-                          ),
-                          prefixIcon: Icon(Icons.lock),
-                          hintText: 'password',
-                          fillColor: Colors.grey,
-                        ),
-                        validator: (value) {
-                          if (value!.isEmpty) {
-                            return 'Please enter your password';
-                          }else if(value.length < 8){
-                            return 'Password should be at least 8 characters';
-                          }
-                          return null;
-                        },
-                        onSaved: (value) {
-                          _password = value!;
-                        },
-                      ),
+                    SizedBox(height: 10,),
+                    getTextFormField(
+                      controller: _password,
+                      icon: Icons.lock,
+                      hintName: 'password',
+                        isObscureText: true,
                     ),
-                    Container(
-                      margin:const EdgeInsets.only(top: 10),
-                      padding:const EdgeInsets.symmetric(horizontal: 20),
-                      child: TextFormField(
-                        obscureText: true,
-                        decoration:const InputDecoration(
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(30)),
-                            borderSide: BorderSide(color: Colors.black12),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(30)),
-                            borderSide: BorderSide(color: Colors.blue),
-                          ),
-                          prefixIcon: Icon(Icons.lock),
-                          hintText: 'confirm password',
-                          fillColor: Colors.grey,
-                        ),
-                        validator: (value) {
-                          if (value!.isEmpty || !(value == _password)) {
-                            return 'Password not match';
-                          }
-                          return null;
-                        },
-                        onSaved: (value) {
-                          _confirmPassword = value!;
-                        },
-                      ),
+                    SizedBox(height: 10,),
+                    getTextFormField(
+                      controller: _conPassword,
+                      icon: Icons.lock,
+                      hintName: 'confirm password',
+                        isObscureText: true,
                     ),
                     const SizedBox(height: 10),
                     ElevatedButton(
                       onPressed: (){
-                      if(_globalKey.currentState!.validate()){
-                        _globalKey.currentState!.validate();
-                      }else{
-                        SignUp();
-                        Navigator.pop(context,Login.id);
-                      }
+                            SignUp();
                     }, child:const Text('Sign up',style: TextStyle(color: Colors.blue),),
                     ),
                     const SizedBox(height: 10),

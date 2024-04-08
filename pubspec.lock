@@ -204,10 +204,10 @@ packages:
     dependency: transitive
     description:
       name: image_picker_platform_interface
-      sha256: "3d2c323daea9d60608f1caf30be32a938916f4975434b8352e6f73dae496da38"
+      sha256: "9ec26d410ff46f483c5519c29c02ef0e02e13a543f882b152d4bfd2f06802f80"
       url: "https://pub.dev"
     source: hosted
-    version: "2.9.4"
+    version: "2.10.0"
   image_picker_windows:
     dependency: transitive
     description:
@@ -449,10 +449,10 @@ packages:
     dependency: "direct main"
     description:
       name: toast
-      sha256: "9f877c2bf17931941b55b22e7e3d432779b769683ca292e0f5f8c3e6cfe62c89"
+      sha256: "12433091e3e5a25b3a25f670126e42547c9ade135de30ad9ace45d1ddccd57c9"
       url: "https://pub.dev"
     source: hosted
-    version: "0.2.9"
+    version: "0.3.0"
   typed_data:
     dependency: transitive
     description:
