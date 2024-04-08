@@ -2,13 +2,15 @@ import 'package:sqflite/sqflite.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart';
 import 'dart:io' as io;
+
+import '../moduls/student.dart';
 class DBHelper{
-  static Database? _database;
+  static Database _database = DBHelper._database;
   static const String DB_Name = 'test.db';
   static const String Table_Student = 'student';
   static const int version =1;
   static const String C_name = 'name';
-  static const String C_mail = 'mail';
+  static const String C_mail = 'email';
   static const String C_studentID = 'studentID';
   static const String C_gender = 'gender';
   static const String C_level = 'level';
@@ -37,7 +39,31 @@ class DBHelper{
         '$C_studentID TEXT,'
         '$C_level TEXT,'
         '$C_password TEXT'
-        'PRIMARY KEY ($C_studentID'
+        'PRIMARY KEY ($C_name)'
         ')');
+  }
+
+  Future<Student> SaveData(Student student)async{
+    var dbClient = await db;
+    student.studentID = (await dbClient.insert(Table_Student, student.toMap())) as String;
+    return student;
+  }
+
+  Future<Student?> getLoginUser(String userId, String password) async {
+    var dbClient = await db;
+    var res = await dbClient.rawQuery("SELECT * FROM $Table_Student WHERE "
+        "$C_name = '$userId' AND "
+        "$C_password = '$password'");
+    if (res.length > 0) {
+      return Student.fromMap(res.first);
+    }
+    return null;
+  }
+
+  Future<int> updateUser(Student student) async {
+    var dbClient = await db;
+    var res = await dbClient.update(Table_Student, student.toMap(),
+        where: '$C_name = ?', whereArgs: [student.name]);
+    return res;
   }
 }

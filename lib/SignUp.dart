@@ -1,5 +1,9 @@
 import 'package:first_assiment/Login.dart';
+import 'package:first_assiment/alertDialog.dart';
+import 'package:first_assiment/moduls/student.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'DataBaseHandler/DBHelper.dart';
 
 class SignupScreen extends StatefulWidget {
   static String id='SignUpScreen';
@@ -19,9 +23,34 @@ class _SignupScreenState extends State<SignupScreen> {
   RegExp get _emailRegex => RegExp(r'^\S+@stud.fci-cu.edu.eg');
   List<String> _genders =["Male" ,"Female"];
   List<String> _levels =['1','2','3','4'];
+  var dbHelper ;
+  @override
+  void initState(){
+    super.initState();
+    dbHelper = DBHelper();
+}
 
-  SignUp(){
-    pragma('ok');
+  Future<void> SignUp() async {
+    String name = _name;
+    String gender = _gender;
+    String email = _email;
+    String studentID = _studentID;
+    String level = _level;
+    String password = _password;
+
+    _globalKey.currentState!.save();
+    Student student = Student(name, gender, email, studentID, level, password);
+    await dbHelper.saveData(student).then((userData) {
+      // showToast(context,'successfully sign up' );
+      SnackBar(
+        content: Text('successfully sign up'),
+        duration: Duration(seconds: 3), // Adjust the duration as needed
+      );
+      Navigator.pop(context);
+    }).catchError((error) {
+      print(error);
+      showToast(context,"Error: Data Save Fail");
+    });
   }
 
   @override
@@ -69,22 +98,6 @@ class _SignupScreenState extends State<SignupScreen> {
                         },
                       ),
                     ),
-                    for(int i=0;i < _genders.length; i++)
-                      Container(
-                        padding: EdgeInsets.symmetric(horizontal: 20),
-                        child: Row(
-                            children: [
-                              Radio(value: _genders[i].toString(),
-                                  groupValue: _gender,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      _gender = value.toString();
-                                    });
-                                  },),
-                              Text(_genders[i]),
-                            ],
-                          ),
-                      ),
                     Container(
                       margin: const EdgeInsets.only(top: 10),
                       padding:const EdgeInsets.symmetric(horizontal: 20),
@@ -142,6 +155,34 @@ class _SignupScreenState extends State<SignupScreen> {
                           _studentID = value!;
                         },
                       ),
+                    ),
+                    Container(
+                      alignment: Alignment.topLeft,
+                      padding: EdgeInsets.symmetric(horizontal:40),
+                      child:
+                        Text('Gender'),
+                    ),
+                    for(int i=0;i < _genders.length; i++)
+                      Container(
+                        padding: EdgeInsets.symmetric(horizontal: 20),
+                        child: Row(
+                          children: [
+                            Radio(value: _genders[i].toString(),
+                              groupValue: _gender,
+                              onChanged: (value) {
+                                setState(() {
+                                  _gender = value.toString();
+                                });
+                              },),
+                            Text(_genders[i]),
+                          ],
+                        ),
+                      ),
+                    Container(
+                      alignment: Alignment.topLeft,
+                      padding: EdgeInsets.symmetric(horizontal:40),
+                      child:
+                      Text('Level'),
                     ),
                     for(int i=0;i < _levels.length; i++)
                       Container(
@@ -239,7 +280,7 @@ class _SignupScreenState extends State<SignupScreen> {
                         SizedBox(width: 5,),
                         GestureDetector(
                             onTap: () {
-                              Navigator.pop(context, Login.id);
+                              Navigator.pop(context);
                             },
                             child:const Text('Log in',style: TextStyle(color: Colors.blue),)
                         ),
