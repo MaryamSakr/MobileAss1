@@ -1,3 +1,4 @@
+import 'package:first_assiment/DataBaseHandler/FileHelper.dart';
 import 'package:first_assiment/alertDialog.dart';
 import 'package:first_assiment/moduls/student.dart';
 import 'package:flutter/cupertino.dart';
@@ -23,10 +24,12 @@ class _SignupScreenState extends State<SignupScreen> {
   List<String> _genders =["Male" ,"Female"];
   List<String> _levels =['1','2','3','4'];
   var dbHelper ;
+  var file;
   @override
   void initState(){
     super.initState();
     dbHelper = DBHelper();
+    file = localStorge();
 }
 
   SignUp() async {
@@ -43,14 +46,17 @@ class _SignupScreenState extends State<SignupScreen> {
       } else {
         _globalKey.currentState!.save();
         Student student = Student(name, gender, email, studentID, level, password);
-        await dbHelper.saveData(student).then((studentData) {
-          alertDialog(context, "Successfully Saved");
+        file.writeStudent(student).then((data){
           Navigator.pop(context);
-        }).catchError((error) {
-          print(error);
-          Text('sff');
-          alertDialog(context, "Error: Data Save Fail");
         });
+
+        // await dbHelper.saveData(student).then((studentData) {
+        //   alertDialog(context, "Successfully Saved");
+        //   Navigator.pop(context);
+        // }).catchError((error) {
+        //   print(error);
+        //   alertDialog(context, "Error: Data Save Fail");
+        // });
       }
     }
   }

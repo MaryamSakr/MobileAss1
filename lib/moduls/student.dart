@@ -5,7 +5,6 @@ class Student{
   String? studentID;
   String? level;
   String? password ;
-
   Student(this.name,this.gender,this.email,this.studentID,this.level,this.password);
 
   Map<String , dynamic> toMap(){

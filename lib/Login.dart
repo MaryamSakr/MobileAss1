@@ -4,6 +4,7 @@
 import 'package:first_assiment/SignUp.dart';
 import 'package:first_assiment/profile.dart';
 import 'package:flutter/material.dart';
+import 'DataBaseHandler/FileHelper.dart';
 import 'Logic.dart';
 
 class Login extends StatefulWidget {
@@ -16,7 +17,12 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-
+  var file;
+  @override
+  void initState(){
+    super.initState();
+    file = localStorge();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,8 +53,14 @@ class _LoginState extends State<Login> {
             ),
             SizedBox(height: 40),
             GestureDetector(
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => Profile(UserName: usernameController.text,)));
+              onTap: () async {
+                localStorge local = localStorge();
+                bool isLoggedIn = await local.readStudents(usernameController.text, passwordController.text);
+                print("Is logged in: $isLoggedIn");
+                if(isLoggedIn){
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => Profile(UserName: usernameController.text,)));
+                }
+                // Navigator.push(context, MaterialPageRoute(builder: (context) => Profile(UserName: usernameController.text,)));
                 login(
                   usernameController.text.toString(),
                   passwordController.text.toString(),

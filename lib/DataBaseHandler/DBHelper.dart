@@ -6,7 +6,7 @@ import '../moduls/student.dart';
 
 class DBHelper{
   static Database _database = DBHelper._database;
-  static const String DB_Name = 'test.db';
+  static const String DB_Name = 'studentForm.db';
   static const String Table_Student = 'student';
   static const int version =1;
   static const String C_name = 'name';
@@ -25,28 +25,36 @@ class DBHelper{
     return _database!;
   }
   initDb() async{
-    io.Directory documentDirectory = await getApplicationDocumentsDirectory();
-    String path = join(documentDirectory.path,DB_Name);
-    var db = await openDatabase(path , version: version, onCreate:  _onCreate);
+    String documentDirectory = await getDatabasesPath();
+    String path = join(documentDirectory,DB_Name);
+    var db = await openDatabase(path , onCreate:  _onCreate);
     return db;
   }
 
   _onCreate(Database db , int intversion) async{
     await db.execute('CREATE TABLE $Table_Student('
-        '$C_name TEXT,'
-        '$C_mail TEXT,'
+        '$C_name TEXT NOT NULL,'
+        '$C_mail TEXT NOT NULL,'
         '$C_gender TEXT,'
-        '$C_studentID TEXT,'
+        '$C_studentID TEXT NOT NULL,'
         '$C_level TEXT,'
-        '$C_password TEXT'
+        '$C_password TEXT NOT NULL'
         'PRIMARY KEY ($C_name)'
         ')');
   }
 
-  Future<Student> SaveData(Student student)async{
+   SaveData(Student student)async{
     var dbClient = await db;
-    student.studentID = (await dbClient.insert(Table_Student, student.toMap())) as String;
-    return student;
+    String name = student.name!;
+    String mail = student.email!;
+    String studentID = student.studentID!;
+    String gender = student.gender!;
+    String level = student.level!;
+    String password = student.password!;
+    int respone = await dbClient.rawInsert('INSERT INTO $Table_Student'
+        '($C_name,$C_mail,$C_studentID,$C_gender,$C_level,$C_password) '
+        'VALUES($name,$mail,$studentID,$gender,$level,$password)');
+    return respone;
   }
 
   Future<Student?> getLoginUser(String userId, String password) async {
@@ -66,4 +74,5 @@ class DBHelper{
         where: '$C_name = ?', whereArgs: [student.name]);
     return res;
   }
+
 }
