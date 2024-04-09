@@ -43,7 +43,7 @@ class _LoginState extends State<Login> {
             getTextFormField(
                 controller: usernameController,
                 icon: Icons.person,
-                hintName: 'User name'
+                hintName: 'E-mail'
             ),
             const SizedBox(height: 20),
           getTextFormField(

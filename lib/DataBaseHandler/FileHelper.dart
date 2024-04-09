@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:first_assiment/moduls/student.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -14,6 +13,23 @@ class localStorge {
     return File('$path/student.txt');
   }
 
+
+  Future<void> appendToFile(String data) async {
+    String filePath = 'path/to/your/file.txt'; // Specify the file path
+    File file = File(filePath);
+    IOSink? sink;
+
+    try {
+      sink = file.openWrite(mode: FileMode.append);
+      sink.writeln(data); // Write data to the file, followed by a newline
+      await sink.flush(); // Flush the data to ensure it's written immediately
+    } catch (e) {
+      print('Error appending to file: $e');
+    } finally {
+      await sink?.close(); // Close the sink to release the resources
+    }
+  }
+
   Future<File> writeStudent(Student student) async {
     File file = await getLocalFile();
     String name = student.name!;
@@ -22,8 +38,12 @@ class localStorge {
     String gender = student.gender!;
     String level = student.level!;
     String password = student.password!;
-    return file.writeAsString(
-        '$name||$mail||$studentID||$gender||$level||$password');
+    IOSink? sink;
+      sink = file.openWrite(mode: FileMode.append);
+      sink.writeln('$name||$mail||$studentID||$gender||$level||$password');
+      await sink.flush(); // Flush the data to ensure it's written immediately
+
+    return file;
   }
 
   Future<bool> readStudents(String email, String password) async {
@@ -111,7 +131,7 @@ class localStorge {
   }
 
 
-  checkID(String ID) async {
+  Future<bool> checkID(String ID) async {
     try {
       File file = await getLocalFile();
       List<String> lines = await file.readAsLines();
@@ -120,7 +140,7 @@ class localStorge {
         if (parts.length >= 6) {
           Student student = Student(
             parts[0], parts[1], parts[2], parts[3], parts[4], parts[5],);
-          if (student.studentID == ID) {
+          if (student.gender == ID) {
             return false;
           }
         }

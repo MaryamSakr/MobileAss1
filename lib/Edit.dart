@@ -49,176 +49,178 @@ class EditScreenState extends State<Edit> {
               ),
               centerTitle: true,
             ),
-            body: Center(
-
-                child: Column(
-                    children: [
-
-                      const SizedBox(height: 20),
-                      Container(
-                        padding: EdgeInsets.symmetric(horizontal: 20),
-                        child: TextFormField(
-                          controller: usernameController,
-                          enabled: true,
-                          decoration: InputDecoration(
-                            hintText: "${widget.name}",
-                            enabledBorder: const OutlineInputBorder(
-                              borderRadius: BorderRadius.all(
-                                  Radius.circular(30)),
-                              borderSide: BorderSide(color: Colors.black12),
+            body: SingleChildScrollView(
+              child: Center(
+              
+                  child: Column(
+                      children: [
+              
+                        const SizedBox(height: 20),
+                        Container(
+                          padding: EdgeInsets.symmetric(horizontal: 20),
+                          child: TextFormField(
+                            controller: usernameController,
+                            enabled: true,
+                            decoration: InputDecoration(
+                              hintText: "${widget.name}",
+                              enabledBorder: const OutlineInputBorder(
+                                borderRadius: BorderRadius.all(
+                                    Radius.circular(30)),
+                                borderSide: BorderSide(color: Colors.black12),
+                              ),
+                              focusedBorder: const OutlineInputBorder(
+                                borderRadius: BorderRadius.all(
+                                    Radius.circular(30)),
+                                borderSide: BorderSide(color: Colors.blue),
+                              ),
+                              prefixIcon: const Icon(Icons.person),
+                              fillColor: Colors.grey,
                             ),
-                            focusedBorder: const OutlineInputBorder(
-                              borderRadius: BorderRadius.all(
-                                  Radius.circular(30)),
-                              borderSide: BorderSide(color: Colors.blue),
-                            ),
-                            prefixIcon: const Icon(Icons.person),
-                            fillColor: Colors.grey,
                           ),
                         ),
+                        const SizedBox(height: 20),
+                  Container(
+                      padding: EdgeInsets.symmetric(horizontal: 20),
+                      child: TextFormField(
+                        enabled: false,
+                        decoration: InputDecoration(
+                          hintText: "${widget.id}",
+                          enabledBorder: const OutlineInputBorder(
+                            borderRadius: BorderRadius.all(
+                                Radius.circular(30)),
+                            borderSide: BorderSide(color: Colors.black12),
+                          ),
+                          focusedBorder: const OutlineInputBorder(
+                            borderRadius: BorderRadius.all(
+                                Radius.circular(30)),
+                            borderSide: BorderSide(color: Colors.blue),
+                          ),
+                          prefixIcon: const Icon(Icons.mail),
+                          fillColor: Colors.grey,
+                        ),
                       ),
-                      const SizedBox(height: 20),
-                Container(
-                    padding: EdgeInsets.symmetric(horizontal: 20),
-                    child: TextFormField(
-                      enabled: false,
-                      decoration: InputDecoration(
-                        hintText: "${widget.id}",
-                        enabledBorder: const OutlineInputBorder(
-                          borderRadius: BorderRadius.all(
-                              Radius.circular(30)),
-                          borderSide: BorderSide(color: Colors.black12),
+                  ),
+                        const SizedBox(height: 20),
+                  Container(
+                      padding: EdgeInsets.symmetric(horizontal: 20),
+                      child: TextFormField(
+                        enabled: false,
+                        decoration: InputDecoration(
+                          hintText: "${widget.Gender}",
+                          enabledBorder: const OutlineInputBorder(
+                            borderRadius: BorderRadius.all(
+                                Radius.circular(30)),
+                            borderSide: BorderSide(color: Colors.black12),
+                          ),
+                          focusedBorder: const OutlineInputBorder(
+                            borderRadius: BorderRadius.all(
+                                Radius.circular(30)),
+                            borderSide: BorderSide(color: Colors.blue),
+                          ),
+                          prefixIcon: const Icon(Icons.info),
+                          fillColor: Colors.grey,
                         ),
-                        focusedBorder: const OutlineInputBorder(
-                          borderRadius: BorderRadius.all(
-                              Radius.circular(30)),
-                          borderSide: BorderSide(color: Colors.blue),
-                        ),
-                        prefixIcon: const Icon(Icons.mail),
-                        fillColor: Colors.grey,
                       ),
-                    ),
-                ),
-                      const SizedBox(height: 20),
-                Container(
-                    padding: EdgeInsets.symmetric(horizontal: 20),
-                    child: TextFormField(
-                      enabled: false,
-                      decoration: InputDecoration(
-                        hintText: "${widget.Gender}",
-                        enabledBorder: const OutlineInputBorder(
-                          borderRadius: BorderRadius.all(
-                              Radius.circular(30)),
-                          borderSide: BorderSide(color: Colors.black12),
+                  ),
+              
+              
+                        const SizedBox(height: 20),
+                  Container(
+                      padding: EdgeInsets.symmetric(horizontal: 20),
+                      child: TextFormField(
+                        controller: genderController,
+                        enabled: true,
+                        decoration: InputDecoration(
+                          hintText: "${widget.email}",
+                          enabledBorder: const OutlineInputBorder(
+                            borderRadius: BorderRadius.all(
+                                Radius.circular(30)),
+                            borderSide: BorderSide(color: Colors.black12),
+                          ),
+                          focusedBorder: const OutlineInputBorder(
+                            borderRadius: BorderRadius.all(
+                                Radius.circular(30)),
+                            borderSide: BorderSide(color: Colors.blue),
+                          ),
+                          prefixIcon: const Icon(Icons.person_2_sharp),
+                          fillColor: Colors.grey,
                         ),
-                        focusedBorder: const OutlineInputBorder(
-                          borderRadius: BorderRadius.all(
-                              Radius.circular(30)),
-                          borderSide: BorderSide(color: Colors.blue),
-                        ),
-                        prefixIcon: const Icon(Icons.info),
-                        fillColor: Colors.grey,
-                      ),
-                    ),
-                ),
-
-
-                      const SizedBox(height: 20),
-                Container(
-                    padding: EdgeInsets.symmetric(horizontal: 20),
-                    child: TextFormField(
-                      controller: genderController,
-                      enabled: true,
-                      decoration: InputDecoration(
-                        hintText: "${widget.email}",
-                        enabledBorder: const OutlineInputBorder(
-                          borderRadius: BorderRadius.all(
-                              Radius.circular(30)),
-                          borderSide: BorderSide(color: Colors.black12),
-                        ),
-                        focusedBorder: const OutlineInputBorder(
-                          borderRadius: BorderRadius.all(
-                              Radius.circular(30)),
-                          borderSide: BorderSide(color: Colors.blue),
-                        ),
-                        prefixIcon: const Icon(Icons.person_2_sharp),
-                        fillColor: Colors.grey,
-                      ),
-                    ),),
-
-                      const SizedBox(height: 20),
-                      Container(
-                        padding: EdgeInsets.symmetric(horizontal: 20),
-                        child: TextFormField(
-                          controller: levelController,
-                          enabled: true,
-                          decoration: InputDecoration(
-                            hintText: "Level ${widget.Level}",
-                            enabledBorder: const OutlineInputBorder(
-                              borderRadius: BorderRadius.all(
-                                  Radius.circular(30)),
-                              borderSide: BorderSide(color: Colors.black12),
+                      ),),
+              
+                        const SizedBox(height: 20),
+                        Container(
+                          padding: EdgeInsets.symmetric(horizontal: 20),
+                          child: TextFormField(
+                            controller: levelController,
+                            enabled: true,
+                            decoration: InputDecoration(
+                              hintText: "Level ${widget.Level}",
+                              enabledBorder: const OutlineInputBorder(
+                                borderRadius: BorderRadius.all(
+                                    Radius.circular(30)),
+                                borderSide: BorderSide(color: Colors.black12),
+                              ),
+                              focusedBorder: const OutlineInputBorder(
+                                borderRadius: BorderRadius.all(
+                                    Radius.circular(30)),
+                                borderSide: BorderSide(color: Colors.blue),
+                              ),
+                              prefixIcon: const Icon(Icons.book),
+                              fillColor: Colors.grey,
                             ),
-                            focusedBorder: const OutlineInputBorder(
-                              borderRadius: BorderRadius.all(
-                                  Radius.circular(30)),
-                              borderSide: BorderSide(color: Colors.blue),
+                          ),),
+                        const SizedBox(height: 20),
+                        GestureDetector(
+              
+                          onTap: () async {
+                            localStorge data = localStorge();
+                            Student std = await data.getData(usernameController.text);
+                            print(usernameController.text);
+                            if(usernameController.text!= "" ){
+                              std.name = usernameController.text;
+                              std.gender = widget.Gender;
+                              std.level = widget.Level;
+                            } if(genderController.text!= ""){
+                              std.name = widget.name;
+                              widget.email=genderController.text;
+                              std.level = widget.Level;
+                            } if(levelController.text!= ""){
+                              std.name = widget.name;
+                              std.gender = widget.Gender;
+                              std.level = levelController.text;
+                            }if(levelController.text== "" &&genderController.text== "" && usernameController.text== ""){
+                              std.name = widget.name;
+              
+                              std.gender = widget.Gender;
+                              std.level = widget.Level;
+                            }
+                            data.UpdateStudent(widget.email , std);
+                            Navigator.push(context, MaterialPageRoute(
+                                builder: (context) =>
+                                    Profile(name: "${std.name}",
+                                      id: "${widget.id}",
+                                      email: "${widget.email}",
+                                      Gender: "${std.gender}",
+                                      Level: "${std.level}",)));
+                          },
+                          child: Container(
+                            width: 100,
+                            height: 50,
+                            decoration: BoxDecoration(
+                              color: Colors.indigo,
+                              borderRadius: BorderRadius.circular(10),
                             ),
-                            prefixIcon: const Icon(Icons.book),
-                            fillColor: Colors.grey,
+                            child: const Center(
+                              child: Text(
+                                'Save', style: TextStyle(color: Colors.white),),
+                            ),
                           ),
-                        ),),
-                      const SizedBox(height: 20),
-                      GestureDetector(
-
-                        onTap: () async {
-                          localStorge data = localStorge();
-                          Student std = await data.getData(usernameController.text);
-                          print(usernameController.text);
-                          if(usernameController.text!= "" ){
-                            std.name = usernameController.text;
-                            std.gender = widget.Gender;
-                            std.level = widget.Level;
-                          } if(genderController.text!= ""){
-                            std.name = widget.name;
-                            widget.email=genderController.text;
-                            std.level = widget.Level;
-                          } if(levelController.text!= ""){
-                            std.name = widget.name;
-                            std.gender = widget.Gender;
-                            std.level = levelController.text;
-                          }if(levelController.text== "" &&genderController.text== "" && usernameController.text== ""){
-                            std.name = widget.name;
-
-                            std.gender = widget.Gender;
-                            std.level = widget.Level;
-                          }
-                          data.UpdateStudent(widget.email , std);
-                          Navigator.push(context, MaterialPageRoute(
-                              builder: (context) =>
-                                  Profile(name: "${std.name}",
-                                    id: "${widget.id}",
-                                    email: "${widget.email}",
-                                    Gender: "${std.gender}",
-                                    Level: "${std.level}",)));
-                        },
-                        child: Container(
-                          width: 100,
-                          height: 50,
-                          decoration: BoxDecoration(
-                            color: Colors.indigo,
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: const Center(
-                            child: Text(
-                              'Save', style: TextStyle(color: Colors.white),),
-                          ),
+              
                         ),
-
-                      ),
-
-                    ]
-                )
+              
+                      ]
+                  )
+              ),
             )
         )
     );

@@ -42,7 +42,23 @@ class _SignupScreenState extends State<SignupScreen> {
     String conPassword = _conPassword.text;
     if (_globalKey.currentState!.validate()) {
       if (password != conPassword) {
-        alertDialog(context, 'Password Mismatch');
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text("Invalid Credentials"),
+              content: Text("Tow Passwords Not The Same"),
+              actions: <Widget>[
+                ElevatedButton(
+                  child: Text("OK"),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ],
+            );
+          },
+        );
       } else {
         _globalKey.currentState!.save();
         Student student = Student(name, gender, email, studentID, level, password);
@@ -152,11 +168,28 @@ class _SignupScreenState extends State<SignupScreen> {
                       onPressed: () async {
                         localStorge local = localStorge();
                         bool isExist = await local.checkID(_studentID.text);
-                        if(isExist){
-
+                        if(!isExist){
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                title: Text("Invalid Credentials"),
+                                content: Text("This Id Is Already Exist"),
+                                actions: <Widget>[
+                                  ElevatedButton(
+                                    child: Text("OK"),
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                  ),
+                                ],
+                              );
+                            },
+                          );
+                        }else {
+                          SignUp();
                         }
-                            SignUp();
-                    }, child:const Text('Sign up',style: TextStyle(color: Colors.blue),),
+                      }, child:const Text('Sign up',style: TextStyle(color: Colors.blue),),
                     ),
                     const SizedBox(height: 10),
                     Row(
