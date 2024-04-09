@@ -44,4 +44,23 @@ class localStorge{
     return false;
   }
 
+
+   checkID(String ID) async{
+    try {
+      File file = await getLocalFile();
+      List<String> lines = await file.readAsLines();
+      for (String line in lines) {
+        List<String> parts = line.split('||');
+        if (parts.length >= 6) {
+          Student student = Student(parts[0], parts[1], parts[2], parts[3], parts[4], parts[5],);
+          if(student.studentID == ID){
+            return false;
+          }
+        }
+      }
+    } catch (e) {
+      print("Error reading student data: $e");
+    }
+    return true;
+  }
 }
