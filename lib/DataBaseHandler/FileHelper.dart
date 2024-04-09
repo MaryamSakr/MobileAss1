@@ -24,17 +24,27 @@ class localStorge{
     String password = student.password!;
     return file.writeAsString('$name||$mail||$studentID||$gender||$level||$password');
   }
-  Future<bool> readStudents(String name,String passwrod) async {
-    List<Student> students = [];
+  Future<bool> readStudents(String email, String password) async {
     try {
       File file = await getLocalFile();
       List<String> lines = await file.readAsLines();
       for (String line in lines) {
+        print("Line: $line");
         List<String> parts = line.split('||');
         if (parts.length >= 6) {
-         Student student = Student(parts[0], parts[1], parts[2], parts[3], parts[4], parts[5],);
-          if(student.name == name && student.password == passwrod){
+          Student student = Student(
+            parts[0],
+            parts[1],
+            parts[2],
+            parts[3],
+            parts[4],
+            parts[5],
+          );
+          if (student.studentID == email && student.password == password) {
+            print("Match found!");
             return true;
+          } else {
+            print('nooooo match');
           }
         }
       }
@@ -42,6 +52,64 @@ class localStorge{
       print("Error reading student data: $e");
     }
     return false;
+  }
+
+
+
+
+
+  Future<Student> getData(String name) async {
+    Student std = Student(null, null, null, null, null, null) ;
+    try {
+      File file = await getLocalFile();
+      List<String> lines = await file.readAsLines();
+      for (String line in lines) {
+        List<String> parts = line.split('||');
+        if (parts.length >= 6) {
+          Student student = Student(parts[0], parts[1], parts[2], parts[3], parts[4], parts[5],);
+          if(student.studentID == name){
+            return student;
+          }
+        }
+      }
+    } catch (e) {
+      print("Error reading student data: $e");
+    }
+    return std;
+  }
+
+
+
+
+  Future<void> UpdateStudent(String email , Student std) async {
+    try {
+      File file = await getLocalFile();
+      List<String> lines = await file.readAsLines();
+      for (String line in lines) {
+        print("Line: $line");
+        List<String> parts = line.split('||');
+        if (parts.length >= 6) {
+          Student student = Student(
+            parts[0],
+            parts[1],
+            parts[2],
+            parts[3],
+            parts[4],
+            parts[5],
+          );
+          if (student.studentID == email ) {
+            student.level = std.level;
+            student.email = std.email;
+            student.gender = std.gender;
+            student.studentID = std.studentID;
+            student.name = std.name;
+            print("Match found!");
+          }
+        }
+      }
+    } catch (e) {
+      print("Error reading student data: $e");
+    }
   }
 
 }

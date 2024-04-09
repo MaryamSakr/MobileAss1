@@ -1,11 +1,16 @@
 import 'dart:async';
 import 'dart:io';
+import 'dart:ui';
+import 'package:first_assiment/Edit.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter/material.dart';
+import 'DataBaseHandler/FileHelper.dart';
+
+import 'moduls/student.dart';
 
 class Profile extends StatefulWidget {
-  var UserName;
-  Profile({Key? myKey , this.UserName}) : super(key: myKey);
+  var name , id , email , Gender , Level , user ,Pass;
+  Profile({Key? myKey , this.name, this.id , this.email , this.Gender , this.Level , this.user , this.Pass}) : super(key: myKey);
   @override
   State<StatefulWidget> createState() {
     return FormScreenState();
@@ -17,19 +22,6 @@ class FormScreenState extends State<Profile> {
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  // Widget _buildComment() {
-  //   return TextFormField(
-  //     decoration: const InputDecoration(
-  //         labelText: 'Comment',
-  //         labelStyle: TextStyle(color: Colors.white60, fontSize: 15),
-  //         enabledBorder: OutlineInputBorder(
-  //           borderSide: BorderSide(color: Colors.white60, width: 2),
-  //           borderRadius: BorderRadius.all(
-  //             Radius.circular(20),
-  //           ),
-  //         )),
-  //   );
-  // }
   File? GalleryImage;
   Future PickImage(ImageSource source)async{
     final GalleryImage = await ImagePicker().pickImage(source: source);
@@ -56,8 +48,8 @@ class FormScreenState extends State<Profile> {
         debugShowCheckedModeBanner: false,
         home: Scaffold(
           appBar: AppBar(
-            title:  Text(
-              "${widget.UserName}",
+            title: const Text(
+              "Profile",
               style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold , color: Colors.indigo),
             ),
             leading: IconButton(
@@ -72,179 +64,199 @@ class FormScreenState extends State<Profile> {
             ),
             centerTitle: true,
           ),
-          body: Center(
-
-            child: Column(
-              children: [
-                const SizedBox(height: 30),
-                GalleryImage != null?
-                Container(
-                  width: 150,
-                  height: 150,
-                  child: CircleAvatar(
-                    backgroundImage: FileImage(GalleryImage!)
-                  ),
-                ) :const Icon(Icons.photo,size: 150,color: Colors.blueGrey,),
-                const SizedBox(height: 30),
-                ElevatedButton(
-                  onPressed: () => PickImage(ImageSource.camera),
-                  child: Container(
-                    height: 50,
-                    width: 200,
-                    child: const Row(
-                      children: [
-                         Padding(
-                          padding: EdgeInsets.all(8.0),
-                          child: Icon(Icons.photo , color: Colors.indigo ),
-                        ),
-                         Text(
-                          'Take a picture',
-                          style: TextStyle(
-                              fontSize: 15,
-                            color: Colors.indigo
-                          ),
-                        ),
-                      ],
+          body: SingleChildScrollView(
+            child: Center(
+            
+              child: Column(
+                children: [
+                  GalleryImage != null?
+                  Container(
+                    width: 150,
+                    height: 150,
+                    child: CircleAvatar(
+                      backgroundImage: FileImage(GalleryImage!)
                     ),
-                  ),
-                ),
-                const SizedBox(height: 15),
-                ElevatedButton(
-                  onPressed: () => PickImage(ImageSource.camera),
-                  child: Container(
-                    height: 50,
-                    width: 200,
-                    child: const Row(
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.all(8.0),
-                          child: Icon(Icons.camera , color: Colors.indigo),
-                        ),
-                        Text(
-                          'Upload From Gallery',
-                          style: TextStyle(
-                              fontSize: 15,
+                  ) :const Icon(Icons.photo,size: 150,color: Colors.blueGrey,),
+                  const SizedBox(height: 30),
+                  ElevatedButton(
+                    onPressed: () => PickImage(ImageSource.camera),
+                    child: Container(
+                      height: 50,
+                      width: 200,
+                      child: const Row(
+                        children: [
+                           Padding(
+                            padding: EdgeInsets.all(8.0),
+                            child: Icon(Icons.camera , color: Colors.indigo ),
+                          ),
+                           Text(
+                            'Take a picture',
+                            style: TextStyle(
+                                fontSize: 15,
                               color: Colors.indigo
+                            ),
                           ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 15),
+                  ElevatedButton(
+                    onPressed: () => PickImage(ImageSource.camera),
+                    child: Container(
+                      height: 50,
+                      width: 200,
+                      child: const Row(
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.all(8.0),
+                            child: Icon(Icons.image , color: Colors.indigo),
+                          ),
+                          Text(
+                            'Upload From Gallery',
+                            style: TextStyle(
+                                fontSize: 15,
+                                color: Colors.indigo
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+            
+                  const SizedBox(height: 20),
+            
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: 20),
+                    child: TextFormField(
+                      enabled: false,
+                      decoration:  InputDecoration(
+                          hintText: "${widget.name}",
+                        enabledBorder: const OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(30)),
+                          borderSide: BorderSide(color: Colors.black12),
                         ),
-                      ],
+                        focusedBorder: const OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(30)),
+                          borderSide: BorderSide(color: Colors.blue),
+                        ),
+                        prefixIcon:const Icon(Icons.person),
+                        fillColor: Colors.grey,
+                      ),
                     ),
                   ),
-                ),
-
-                const SizedBox(height: 20),
-                Container(
-                  padding: EdgeInsets.symmetric(horizontal: 20),
-                  child: TextFormField(
-                    enabled: false,
-                    decoration: const InputDecoration(
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(30)),
-                        borderSide: BorderSide(color: Colors.black12),
+            
+            
+                  const SizedBox(height: 20),
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: 20),
+                    child: TextFormField(
+                      enabled: false,
+                      decoration:  InputDecoration(
+                        hintText: "${widget.id}",
+                        enabledBorder:const OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(30)),
+                          borderSide: BorderSide(color: Colors.black12),
+                        ),
+                        focusedBorder:const OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(30)),
+                          borderSide: BorderSide(color: Colors.blue),
+                        ),
+                        prefixIcon:const Icon(Icons.mail),
+                        fillColor: Colors.grey,
                       ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(30)),
-                        borderSide: BorderSide(color: Colors.blue),
-                      ),
-                      prefixIcon: Icon(Icons.person),
-                      hintText: 'user name',
-                      fillColor: Colors.grey,
                     ),
                   ),
-                ),
-
-
-                const SizedBox(height: 20),
-                Container(
-                  padding: EdgeInsets.symmetric(horizontal: 20),
-                  child: TextFormField(
-                    enabled: false,
-                    decoration: const InputDecoration(
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(30)),
-                        borderSide: BorderSide(color: Colors.black12),
+            
+                  const SizedBox(height: 20),
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: 20),
+                    child: TextFormField(
+                      enabled: false,
+                      decoration:  InputDecoration(
+                        hintText: "${widget.Gender}",
+                        enabledBorder:const OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(30)),
+                          borderSide: BorderSide(color: Colors.black12),
+                        ),
+                        focusedBorder:const OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(30)),
+                          borderSide: BorderSide(color: Colors.blue),
+                        ),
+                        prefixIcon:const Icon(Icons.info),
+                        fillColor: Colors.grey,
                       ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(30)),
-                        borderSide: BorderSide(color: Colors.blue),
-                      ),
-                      prefixIcon: Icon(Icons.person),
-                      hintText: 'Id',
-                      fillColor: Colors.grey,
                     ),
                   ),
-                ),
-
-                const SizedBox(height: 20),
-                Container(
-                  padding: EdgeInsets.symmetric(horizontal: 20),
-                  child: TextFormField(
-                    enabled: false,
-                    decoration: const InputDecoration(
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(30)),
-                        borderSide: BorderSide(color: Colors.black12),
+            
+            
+                  const SizedBox(height: 20),
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: 20),
+                    child: TextFormField(
+                      enabled: false,
+                      decoration: InputDecoration(
+                        hintText: "${widget.email}",
+                        enabledBorder:const OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(30)),
+                          borderSide: BorderSide(color: Colors.black12),
+                        ),
+                        focusedBorder:const OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(30)),
+                          borderSide: BorderSide(color: Colors.blue),
+                        ),
+            
+                        prefixIcon:const Icon(Icons.person_2_sharp),
+                        fillColor: Colors.grey,
                       ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(30)),
-                        borderSide: BorderSide(color: Colors.blue),
-                      ),
-                      prefixIcon: Icon(Icons.person),
-                      hintText: 'email',
-                      fillColor: Colors.grey,
                     ),
                   ),
-                ),
-
-
-                const SizedBox(height: 20),
-                Container(
-                  padding: EdgeInsets.symmetric(horizontal: 20),
-                  child: TextFormField(
-                    enabled: false,
-                    decoration: const InputDecoration(
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(30)),
-                        borderSide: BorderSide(color: Colors.black12),
+            
+                  const SizedBox(height: 20),
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: 20),
+                    child: TextFormField(
+                      enabled: false,
+                      decoration:  InputDecoration(
+                          hintText: "Level ${widget.Level}",
+                        enabledBorder:const OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(30)),
+                          borderSide: BorderSide(color: Colors.black12),
+                        ),
+                        focusedBorder:const OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(30)),
+                          borderSide: BorderSide(color: Colors.blue),
+                        ),
+                        prefixIcon:const Icon(Icons.book),
+                        fillColor: Colors.grey,
                       ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(30)),
-                        borderSide: BorderSide(color: Colors.blue),
-                      ),
-                      prefixIcon: Icon(Icons.person),
-                      hintText: 'Gender',
-                      fillColor: Colors.grey,
+                    ),
+            
+                  ),
+            
+                  SizedBox(height: 50,),
+            
+                  GestureDetector(
+                      onTap: () async {
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => Edit(name: "${widget.name}",id: "${widget.id}" , email: "${widget.email}",Gender: "${widget.Gender}", Level: "${widget.Level}",Pass: "${widget.Pass}")));
+                      },
+                    child: Container(
+                      width: 100,
+                    height: 50,
+                    decoration: BoxDecoration(
+                      color: Colors.indigo,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child:const Center(
+                      child: Text('Edit',style: TextStyle(color: Colors.white),),
                     ),
                   ),
-                ),
-
-                const SizedBox(height: 20),
-                Container(
-                  padding: EdgeInsets.symmetric(horizontal: 20),
-                  child: TextFormField(
-                    enabled: false,
-                    decoration: const InputDecoration(
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(30)),
-                        borderSide: BorderSide(color: Colors.black12),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(30)),
-                        borderSide: BorderSide(color: Colors.blue),
-                      ),
-                      prefixIcon: Icon(Icons.person),
-                      hintText: 'Level',
-                      fillColor: Colors.grey,
-                    ),
+            
                   ),
-                ),
-                const SizedBox(height: 20),
-
-
-
-              ],
+            
+            
+            ])
             ),
-
           ),
         ));
   }

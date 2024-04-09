@@ -4,19 +4,20 @@ class getTextFormField extends StatelessWidget {
   TextEditingController controller;
   String hintName;
   IconData icon;
-  bool isObscureText;
+  bool isObscureText , enable;
   RegExp get _emailRegex => RegExp(r'^\S+@stud.fci-cu.edu.eg');
   getTextFormField(
       {required this.controller,
         required this.hintName,
         required this.icon,
         this.isObscureText = false,
+        this.enable=true,
     });
   @override
   Widget build(BuildContext context) {
 
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 20.0),
+      padding:const EdgeInsets.symmetric(horizontal: 20.0),
       child: TextFormField(
         controller: controller,
         obscureText: isObscureText,
@@ -26,19 +27,20 @@ class getTextFormField extends StatelessWidget {
               return 'Please enter your E-mail';
             }
             return 'Please enter $hintName';
-          } else if(hintName == 'passord' && value.length<8){
+          } else if(hintName == 'password' && value.length<8){
             return 'Password should be at least 8 characters';
           }else if (!_emailRegex.hasMatch(value) && hintName == 'studentID@stud.fci-cu.edu.eg'){
             return 'Email address is not valid\n It should be FCI Email structure';
           }
           return null;
         },
+        enabled: enable,
         decoration: InputDecoration(
-          enabledBorder: OutlineInputBorder(
+          enabledBorder:const OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(30.0)),
             borderSide: BorderSide(color: Colors.transparent),
           ),
-          focusedBorder: OutlineInputBorder(
+          focusedBorder:const OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(30.0)),
             borderSide: BorderSide(color: Colors.blue),
           ),

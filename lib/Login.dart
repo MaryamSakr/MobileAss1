@@ -1,12 +1,12 @@
 // "email": "eve.holt@reqres.in",
 // "password": "cityslicka"
 
-import 'package:first_assiment/SignUp.dart';
-import 'package:first_assiment/profile.dart';
+import 'SignUp.dart';
+import 'profile.dart';
 import 'package:flutter/material.dart';
 import 'DataBaseHandler/FileHelper.dart';
-import 'Logic.dart';
 import 'getFormTextField.dart';
+import 'moduls/student.dart';
 
 class Login extends StatefulWidget {
   static String id = 'Login';
@@ -56,13 +56,43 @@ class _LoginState extends State<Login> {
                 localStorge local = localStorge();
                 bool isLoggedIn = await local.readStudents(usernameController.text, passwordController.text);
                 print("Is logged in: $isLoggedIn");
-                if(isLoggedIn){
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => Profile(UserName: usernameController.text,)));
+
+                if (isLoggedIn) {
+                  Student std = await local.getData(usernameController.text);
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => Profile(name: std.name,id: std.studentID , email: std.email,Gender: std.gender, Level: std.level,user: usernameController.text , Pass: passwordController)));                }
+
+               else {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: Text("Invalid Credentials"),
+                        content: Text("Please rewrite your email and password."),
+                        actions: <Widget>[
+                          ElevatedButton(
+                            child: Text("OK"),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                          ),
+                        ],
+                      );
+                    },
+                  );
                 }
-                login(
-                  usernameController.text.toString(),
-                  passwordController.text.toString(),
-                );
+
+
+
+
+
+
+                // if(isLoggedIn){
+                //   Student std = await local.getData(usernameController.text);
+                //   Navigator.push(context, MaterialPageRoute(builder: (context) => Profile(name: std.name,id: std.studentID , email: std.email,Gender: std.gender, Level: std.level,user: usernameController.text)));                }
+                // login(
+                //   usernameController.text.toString(),
+                //   passwordController.text.toString(),
+                // );
               },
               child: Container(
                 height: 50,

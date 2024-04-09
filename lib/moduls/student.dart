@@ -5,7 +5,7 @@ class Student{
   String? studentID;
   String? level;
   String? password ;
-  Student(this.name,this.gender,this.email,this.studentID,this.level,this.password);
+  Student(this.name,this.email,this.studentID,this.gender,this.level,this.password);
 
   Map<String , dynamic> toMap(){
     var map = <String,dynamic>{
