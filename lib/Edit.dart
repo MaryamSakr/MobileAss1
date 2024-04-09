@@ -177,27 +177,19 @@ class EditScreenState extends State<Edit> {
                           print(usernameController.text);
                           if(usernameController.text!= "" ){
                             std.name = usernameController.text;
-                            std.studentID = widget.id;
-                            std.email = widget.email;
                             std.gender = widget.Gender;
                             std.level = widget.Level;
                           } if(genderController.text!= ""){
-                            print("/////");
                             std.name = widget.name;
-                            std.studentID = widget.id;
-                            std.email = widget.email;
-                            std.gender = genderController.text;
+                            widget.email=genderController.text;
                             std.level = widget.Level;
                           } if(levelController.text!= ""){
                             std.name = widget.name;
-                            std.studentID = widget.id;
-                            std.email = widget.email;
                             std.gender = widget.Gender;
                             std.level = levelController.text;
                           }if(levelController.text== "" &&genderController.text== "" && usernameController.text== ""){
                             std.name = widget.name;
-                            std.studentID = widget.id;
-                            std.email = widget.email;
+
                             std.gender = widget.Gender;
                             std.level = widget.Level;
                           }
