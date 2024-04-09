@@ -149,7 +149,12 @@ class _SignupScreenState extends State<SignupScreen> {
                     ),
                     const SizedBox(height: 10),
                     ElevatedButton(
-                      onPressed: (){
+                      onPressed: () async {
+                        localStorge local = localStorge();
+                        bool isExist = await local.checkID(_studentID.text);
+                        if(isExist){
+
+                        }
                             SignUp();
                     }, child:const Text('Sign up',style: TextStyle(color: Colors.blue),),
                     ),
