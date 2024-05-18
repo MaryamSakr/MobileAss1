@@ -3,7 +3,6 @@ import 'package:first_assiment/alertDialog.dart';
 import 'package:first_assiment/moduls/student.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'DataBaseHandler/DBHelper.dart';
 import 'getFormTextField.dart';
 
 class SignupScreen extends StatefulWidget {
@@ -23,12 +22,10 @@ class _SignupScreenState extends State<SignupScreen> {
   final _conPassword = TextEditingController();
   List<String> _genders =["Male" ,"Female"];
   List<String> _levels =['1','2','3','4'];
-  var dbHelper ;
   var file;
   @override
   void initState(){
     super.initState();
-    dbHelper = DBHelper();
     file = localStorge();
 }
 
